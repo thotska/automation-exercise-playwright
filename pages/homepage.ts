@@ -12,5 +12,7 @@ export class Homepage extends BasePage {
     async verifyHomePage(){
         await expect(this.mainTitle).toBeVisible()
     }
-
+    async clickOnTestCasesLink():Promise<void>{
+        await this.page.getByRole('button', { name: 'Test Cases' }).click()
+    }
 }
