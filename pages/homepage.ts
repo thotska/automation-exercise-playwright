@@ -15,4 +15,9 @@ export class Homepage extends BasePage {
     async clickOnTestCasesLink():Promise<void>{
         await this.page.getByRole('button', { name: 'Test Cases' }).click()
     }
+
+   async scrollToBottom() {
+        await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+}
+
 }
