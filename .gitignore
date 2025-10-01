@@ -54,5 +54,3 @@ coverage/
 dist/
 build/
 package-lock.json
-package.json
-playwright.config.ts
