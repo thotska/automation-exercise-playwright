@@ -2,23 +2,16 @@ import {Locator, Page, expect} from "@playwright/test"
 import { BasePage } from "./basePage";
 
 export class CategoriesPage extends BasePage {
-    private womenDressHeading: Locator
-    private menJeansHeading: Locator
+    private header: Locator
 
     constructor(page: Page) {
         super(page)
-        this.womenDressHeading = page.locator('h2[class="title text-center"]')
-        this.menJeansHeading = page.locator('h2[class="title text-center"]')
+        this.header = page.locator('h2[class="title text-center"]')
     }
 
 
-    async verifyWomenDressPage(): Promise<void> {
-        await this.womenDressHeading.isVisible()
-        await expect(this.womenDressHeading).toHaveText('Women - Dress Products')
+    async verifyHeader(text: string): Promise<void> {
+        await this.header.isVisible()
+        await expect(this.header).toHaveText(text)
     }
-
-    async verifyMenJeansPage(): Promise<void> {
-        await this.menJeansHeading.isVisible()
-        await expect(this.menJeansHeading).toHaveText('Men - Jeans Products')
     }
-}

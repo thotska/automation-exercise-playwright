@@ -15,12 +15,12 @@ test.describe('Women and Men Categories', () => {
     test('verify women dress page', async ({ page }) => {
         await page.goto('https://automationexercise.com/');
         await homepage.clickOnWomenCategoryDress();
-        await categoriesPage.verifyWomenDressPage();
+        await categoriesPage.verifyHeader('Women - Dress Products');
     });
 
     test('verify men jeans page', async ({ page }) => {
         await page.goto('https://automationexercise.com/');
         await homepage.clickOnMenCategoryJeans();
-        await categoriesPage.verifyMenJeansPage();
+        await categoriesPage.verifyHeader('Men - Jeans Products');
     });
 });
