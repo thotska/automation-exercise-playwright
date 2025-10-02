@@ -50,6 +50,6 @@ export class Homepage extends BasePage {
         await expect(this.brandTitle).toHaveText('Brands')
     }
     async clickBrandName(brandName: string): Promise<void> {
-        await this.brandLinksLocator.click()
+        await this.brandLinksLocator.getByText(brandName).click()
 
 }}
