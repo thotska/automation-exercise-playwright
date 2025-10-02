@@ -9,6 +9,8 @@ export class Homepage extends BasePage {
     private womenDressLink: Locator
     private menCategoryLink: Locator
     private menJeansLink: Locator
+    private brandTitle: Locator
+    private brandLinksLocator: Locator
 
     constructor(page: Page) {
         super(page)
@@ -18,6 +20,8 @@ export class Homepage extends BasePage {
         this.womenDressLink = page.getByRole('link', { name: 'Dress' })
         this.menCategoryLink = page.getByRole('link', { name: ' Men' })
         this.menJeansLink = page.getByRole('link', { name: 'Jeans' })
+        this.brandTitle = page.getByRole('heading', { name: 'Brands' })
+        this.brandLinksLocator = page.locator('div[class="brands-name"] ul li')
         
     }
     async verifyHomePage() {
@@ -41,7 +45,11 @@ export class Homepage extends BasePage {
         await this.menCategoryLink.click()
         await this.menJeansLink.click()
     }
+    async verifyBrandsVisible(): Promise<void> {
+        await expect(this.brandTitle).toBeVisible()
+        await expect(this.brandTitle).toHaveText('Brands')
+    }
+    async clickBrandName(brandName: string): Promise<void> {
+        await this.brandLinksLocator.getByText(brandName).click()
 
-
-
-}
+}}
