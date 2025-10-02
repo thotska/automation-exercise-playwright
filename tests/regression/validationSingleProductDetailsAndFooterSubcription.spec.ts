@@ -4,7 +4,7 @@ import { BasePage } from '../../pages/basePage';
 import {SingleProductDetailsPage} from '../../pages/singleProductDetailsPage';
 import { SearchedProductsPage } from '../../pages/searchedProductsPage';
 
-test.describe('Single Product Details Page', () => {
+test.describe('Single Product Details Page and Footer Subscription Validation', () => {
     let homepage: Homepage;
     let singleProductDetailsPage: SingleProductDetailsPage;
     let basePage: BasePage;
@@ -24,5 +24,17 @@ test.describe('Single Product Details Page', () => {
         await searchedProductsPage.clickOnViewProduct()
         await singleProductDetailsPage.verifyProductDetails()
     });
+
+      test('Footer text validation', async ({ page }) => {
+        await page.goto('https://automationexercise.com/')
+        await homepage.verifyHomePage()
+        await homepage.scrollToBottom()
+        await basePage.verifyFooterText()
+        await basePage.enterEmailAndClickArrow('test@example.com')
+        await basePage.verifySuccessMessage()
+    })
+
+
+
 });
     

@@ -1,23 +1,47 @@
-import {expect, Locator, Page} from "@playwright/test"
+import { expect, Locator, Page } from "@playwright/test"
 import { BasePage } from "./basePage"
 
 export class Homepage extends BasePage {
 
     private mainTitle: Locator
+    private categoriesLocator: Locator
+    private womenCategoryLink: Locator
+    private womenDressLink: Locator
+    private menCategoryLink: Locator
+    private menJeansLink: Locator
 
-    constructor(page: Page){
+    constructor(page: Page) {
         super(page)
         this.mainTitle = page.locator('div[class="logo pull-left"] img')
+        this.categoriesLocator = page.locator('div[id="accordian"]')
+        this.womenCategoryLink = page.getByRole('link', { name: ' Women' })
+        this.womenDressLink = page.getByRole('link', { name: 'Dress' })
+        this.menCategoryLink = page.getByRole('link', { name: ' Men' })
+        this.menJeansLink = page.getByRole('link', { name: 'Jeans' })
+        
     }
-    async verifyHomePage(){
+    async verifyHomePage() {
         await expect(this.mainTitle).toBeVisible()
     }
-    async clickOnTestCasesLink():Promise<void>{
+    async clickOnTestCasesLink(): Promise<void> {
         await this.page.getByRole('button', { name: 'Test Cases' }).click()
     }
 
-   async scrollToBottom() {
+    async scrollToBottom() {
         await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
-}
+    }
+    async verifyCategoriesVisible(): Promise<void> {
+        await expect(this.categoriesLocator).toBeVisible()
+    }
+    async clickOnWomenCategoryDress(): Promise<void> {
+        await this.womenCategoryLink.click()
+        await this.womenDressLink.click()
+    }
+    async clickOnMenCategoryJeans(): Promise<void> {
+        await this.menCategoryLink.click()
+        await this.menJeansLink.click()
+    }
+
+
 
 }
