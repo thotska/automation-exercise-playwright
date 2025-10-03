@@ -14,6 +14,8 @@ export class SignUpLoginPage extends BasePage {
     private loginButton: Locator
     private emailOrPasswordIncorrectMessage: Locator
     private loginSuccessMessage: Locator
+    private newUserSignupTitleLocator: Locator
+    private emailAlreadyExistMessage: Locator
  
 
     constructor(page: Page){
@@ -28,6 +30,8 @@ export class SignUpLoginPage extends BasePage {
         this.loginButton = page.getByRole('button', { name: 'Login' })
         this.emailOrPasswordIncorrectMessage = page.locator('div[class="login-form"] p')
         this.loginSuccessMessage = page.getByRole('listitem').filter({ hasText: 'Logged in as Jon Doe' })
+        this.newUserSignupTitleLocator = page.locator('div[class="signup-form"] h2')
+        this.emailAlreadyExistMessage = page.locator('div[class="signup-form"] p')
     }
     async validateSignUpTitle():Promise<void>{
         await expect(this.signUpTitle).toBeVisible()
@@ -58,5 +62,12 @@ export class SignUpLoginPage extends BasePage {
         await expect(this.emailOrPasswordIncorrectMessage).toBeVisible()
         await expect(this.emailOrPasswordIncorrectMessage).toHaveText('Your email or password is incorrect!')
     }
-    
+    async verifyNewUserSignupTitle():Promise<void>{
+        await expect(this.newUserSignupTitleLocator).toBeVisible()
+        await expect(this.newUserSignupTitleLocator).toHaveText('New User Signup!')
+    }
+    async verifyEmailAlreadyExistMessage():Promise<void>{
+        await expect(this.emailAlreadyExistMessage).toBeVisible()
+        await expect(this.emailAlreadyExistMessage).toHaveText('Email Address already exist!')
+    }
 }
