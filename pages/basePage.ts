@@ -35,6 +35,6 @@ export class BasePage {
         await this.topNavigationBarLocators.getByText(linkText).click()
     }
     async verifyLoginSuccessMessage(userName: string):Promise<void>{
-        await expect(this.topNavigationBarLocators.last().getByText(`Logged in as ${userName}`)).toBeVisible()
+        await expect(this.topNavigationBarLocators.getByText(`Logged in as ${userName}`)).toBeVisible()
     }
 }
