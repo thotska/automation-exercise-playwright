@@ -9,7 +9,7 @@ export class SearchedProductsPage extends BasePage {
 
     constructor(page: Page){
         super(page)
-    this.searchedProductsTitle = page.getByRole('heading', { name: 'All Products' })
+    this.searchedProductsTitle = page.getByRole('heading', { name: 'Searched Products' })
     this.allProductsVisibleLocator = page.locator('div[class="features_items"] div[class="single-products"]')
     this.viewProductLink = page.locator('.nav.nav-pills.nav-justified > li > a').first() 
     }
