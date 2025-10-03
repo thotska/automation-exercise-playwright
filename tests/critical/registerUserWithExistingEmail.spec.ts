@@ -18,7 +18,7 @@ test.describe('Login with invalid credentials Test', async () => {
         await homePage.verifyHomePage()
         await homePage.clickOnNavigationLink("Signup / Login")
         await signUpLoginPage.verifyNewUserSignupTitle()
-        await signUpLoginPage.signUpWithEmailAndName('John Doe', process.env.testemail!)    
+        await signUpLoginPage.signUpWithEmailAndName(process.env.testusername!, process.env.testemail!)    
         await signUpLoginPage.verifyEmailAlreadyExistMessage()
     })
 }) 
