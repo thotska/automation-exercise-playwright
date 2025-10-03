@@ -15,8 +15,6 @@ export default defineConfig({
     retries: process.env.CI ? 2 : 0,
     /* Opt out of parallel tests on CI. */
     workers: process.env.CI ? 1 : undefined,
-    /* Overall test timeout */
-    timeout: 60000, // 60 seconds
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
     reporter: 'html',
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -25,9 +23,6 @@ export default defineConfig({
         viewport: { width: 1920, height: 1080 },
         /* Base URL to use in actions like `await page.goto('/')`. */
         baseURL: 'https://automationexercise.com',
-
-        /* Timeout for each test action (e.g., click, fill) */
-        actionTimeout: 60000, // 60 seconds
 
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: 'on-first-retry',
