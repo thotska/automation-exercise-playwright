@@ -58,7 +58,5 @@ export class SignUpLoginPage extends BasePage {
         await expect(this.emailOrPasswordIncorrectMessage).toBeVisible()
         await expect(this.emailOrPasswordIncorrectMessage).toHaveText('Your email or password is incorrect!')
     }
-    async verifyLoginSuccessMessage():Promise<void>{
-        await expect(this.loginSuccessMessage).toBeVisible()
-    }
+    
 }

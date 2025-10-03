@@ -18,9 +18,9 @@ test.describe('Login with invalid credentials Test', async () => {
         await homePage.verifyHomePage()
         await homePage.clickOnNavigationLink("Signup / Login")
         await signUpLoginPage.validateLoginToYourAccountTitle()
-        const userName = process.env.userName
+        const testemail = process.env.testemail
         const password = process.env.password
-        await signUpLoginPage.loginWithValidEmailAndPassword(userName!, password!)
-        await signUpLoginPage.verifyLoginSuccessMessage()
+        await signUpLoginPage.loginWithValidEmailAndPassword(testemail!, password!)
+        await basePage.verifyLoginSuccessMessage(testemail!)
     })
 }) 
