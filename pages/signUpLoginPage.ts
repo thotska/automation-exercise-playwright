@@ -13,6 +13,7 @@ export class SignUpLoginPage extends BasePage {
     private passwordLoginInput: Locator
     private loginButton: Locator
     private emailOrPasswordIncorrectMessage: Locator
+    private loginSuccessMessage: Locator
  
 
     constructor(page: Page){
@@ -26,6 +27,7 @@ export class SignUpLoginPage extends BasePage {
         this.passwordLoginInput = page.getByRole('textbox', { name: 'Password' })
         this.loginButton = page.getByRole('button', { name: 'Login' })
         this.emailOrPasswordIncorrectMessage = page.locator('div[class="login-form"] p')
+        this.loginSuccessMessage = page.getByRole('listitem').filter({ hasText: 'Logged in as Jon Doe' })
     }
     async validateSignUpTitle():Promise<void>{
         await expect(this.signUpTitle).toBeVisible()
@@ -47,8 +49,16 @@ export class SignUpLoginPage extends BasePage {
         await this.passwordLoginInput.fill(password)
         await this.loginButton.click()
     }
+    async loginWithValidEmailAndPassword(email: string, password: string):Promise<void>{
+        await this.emailLoginInput.fill(email)
+        await this.passwordLoginInput.fill(password)
+        await this.loginButton.click()
+    }
     async verifyEmailOrPasswordIncorrectMessage():Promise<void>{
         await expect(this.emailOrPasswordIncorrectMessage).toBeVisible()
         await expect(this.emailOrPasswordIncorrectMessage).toHaveText('Your email or password is incorrect!')
+    }
+    async verifyLoginSuccessMessage():Promise<void>{
+        await expect(this.loginSuccessMessage).toBeVisible()
     }
 }
