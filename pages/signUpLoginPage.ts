@@ -67,6 +67,7 @@ export class SignUpLoginPage extends BasePage {
         await expect(this.newUserSignupTitleLocator).toHaveText('New User Signup!')
     }
     async verifyEmailAlreadyExistMessage():Promise<void>{
-        await expect(this.emailOrPasswordIncorrectMessage).toHaveText('Email Address already exist!')
+        await expect(this.emailAlreadyExistMessage).toBeVisible()
+        await expect(this.emailAlreadyExistMessage).toHaveText('Email Address already exist!')
     }
 }
