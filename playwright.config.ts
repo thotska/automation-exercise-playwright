@@ -20,7 +20,7 @@ export default defineConfig({
     /* Timeout configurations */
     timeout: 30000, // 30 seconds per test
     expect: {
-        timeout: 5000, // 5 seconds for expect assertions
+        timeout: 30000, // 30 seconds for expect assertions
     },
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {

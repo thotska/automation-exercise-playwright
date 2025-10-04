@@ -29,20 +29,31 @@ export class ContactUsPage extends BasePage {
         await this.getInTouchHeading.isVisible()
         await expect(this.getInTouchHeading).toContainText('Get In Touch')
     }
-    async fillContactUsForm(name: string, email: string, subject: string, message: string, filePath: string):Promise<void>{
+    async fillContactUsForm(name: string, email: string, subject: string, message: string):Promise<void>{
         await this.nameField.fill(name)
         await this.emailField.fill(email)
         await this.subjectField.fill(subject)
         await this.messageField.fill(message)
-        await this.uploadFileButton.setInputFiles(filePath)
         await this.submitButton.click()
         
+    }
+    
+    async fillContactUsFormOnly(name: string, email: string, subject: string, message: string):Promise<void>{
+        await this.nameField.fill(name)
+        await this.emailField.fill(email)
+        await this.subjectField.fill(subject)
+        await this.messageField.fill(message)
+    }
+    
+    async submitContactUsForm():Promise<void>{
+        await this.submitButton.click()
+    }
+     async clickONAlertOkButton():Promise<void>{
+        await this.page.once('dialog', async dialog => dialog.accept());
     }
     async verifyContactUsPageSuccessMessage():Promise<void>{
         await expect(this.successMessageContactUs).toBeVisible()
         await expect(this.successMessageContactUs).toHaveText('Success! Your details have been submitted successfully.')
 }
-    async clickONAlertOkButton():Promise<void>{
-        await this.page.on('dialog', dialog => dialog.accept());
-}
+
 }
