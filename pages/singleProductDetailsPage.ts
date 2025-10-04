@@ -11,6 +11,11 @@ export class SingleProductDetailsPage extends BasePage {
     private productAvailability: Locator
     private productCondition: Locator
     private productBrand: Locator
+    private quantityField: Locator
+    private addToCartButton: Locator
+    private viewCartButton: Locator
+    private productsQuantityInCart: Locator
+    private productsDetailsSection: Locator
     
     
     constructor(page: Page){
@@ -21,6 +26,12 @@ export class SingleProductDetailsPage extends BasePage {
         this.productAvailability = page.getByText('Availability: In Stock')
         this.productCondition = page.getByText('Condition: New')
         this.productBrand = page.getByText('Brand: Madame')
+        this.quantityField = page.locator('#quantity')
+        this.addToCartButton = page.getByRole('button', { name: ' Add to cart' })
+        this.viewCartButton = page.getByRole('link', { name: 'View Cart' })
+        this.productsQuantityInCart = page.locator('button[class="disabled"]')
+        this.productsDetailsSection = page.locator('div[class="product-information"]')
+        
     }
 
     async verifyProductDetails():Promise<void>{
@@ -31,4 +42,16 @@ export class SingleProductDetailsPage extends BasePage {
         await this.productCondition.isVisible()
         await this.productBrand.isVisible()
     }
+    async verifyProductsDetailsSection():Promise<void>{
+        await this.productsDetailsSection.isVisible()
+    }
+    async increaseProductQuantity(quantity: string):Promise<void>{
+        await this.quantityField.fill(quantity)
+        await this.addToCartButton.click()
+        await this.viewCartButton.click()
+    }
+    async verifyExactProductsQuantityInCart(number: string):Promise<void>{
+        await this.productsQuantityInCart.isVisible()
+        
+}
 }
