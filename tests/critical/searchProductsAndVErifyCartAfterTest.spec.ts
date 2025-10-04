@@ -20,7 +20,7 @@ test.describe('Search Product Test', async () => {
         signUpLoginPage = new SignUpLoginPage(page)
     })
     test('Search product and verify products in cart', async ({ page }) => {
-        await page.goto(process.env.baseurl!)
+        await page.goto(process.env.baseURL!)
         await homePage.clickOnNavigationLink("Products")
         await productsPage.verifyAllProductsPage()
         await productsPage.searchForProduct('dress')

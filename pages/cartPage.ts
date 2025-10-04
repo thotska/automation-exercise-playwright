@@ -3,9 +3,15 @@ import { BasePage } from "./basePage";
 
 export class CartPage extends BasePage {
     private cartPageTitle: Locator
-    closeSymbolLocator: Locator
-    emptyCartMessage: Locator
-    productsInCartVisibleLocator: Locator
+    private closeSymbolLocator: Locator
+    private emptyCartMessage: Locator
+    private productsInCartVisibleLocator: Locator
+    private proceedToCheckoutButton: Locator
+    private deliveryAddressBox: Locator
+    private yourBillingAddressBox: Locator
+    private commentField: Locator
+    private placeOrderButton: Locator
+    
     
     constructor(page: Page) {
         super(page)
@@ -13,6 +19,12 @@ export class CartPage extends BasePage {
         this.closeSymbolLocator = page.locator('a[class="cart_quantity_delete"]')
         this.emptyCartMessage = page.locator('span[id="empty_cart"]')
         this.productsInCartVisibleLocator = page.getByRole('row', { name: 'Product Image Blue Top Women' })
+        this.proceedToCheckoutButton = page.locator('a[class="btn btn-default check_out"]')
+        this.deliveryAddressBox = page.locator('ul[id="address_delivery"]')
+        this.yourBillingAddressBox = page.locator('ul[id="address_invoice"]')
+        this.commentField = page.locator('textarea[name="message"]')
+        this.placeOrderButton = page.getByRole('link', { name: 'Place Order' })
+
     }
     async verifyCartPage(): Promise<void> {
         await expect(this.cartPageTitle).toBeVisible()
@@ -30,5 +42,19 @@ async verifyNoProductsAreInCart(): Promise<void> {
 }
 async verifyProductsAreInCart(): Promise<void> {
     await expect(this.productsInCartVisibleLocator).toBeVisible()
+}
+async clickOnProceedToCheckoutButton(): Promise<void> {
+    await this.proceedToCheckoutButton.click()
+}
+async verifyDeliveryAndBillingAddressBoxes(): Promise<void> {
+    await expect(this.deliveryAddressBox).not.toBeEmpty()
+    await expect(this.yourBillingAddressBox).not.toBeEmpty()
+
+}
+async enterCommentInCommentField(comment: string): Promise<void> {
+    await this.commentField.fill(comment);
+}
+async clickOnPlaceOrderButton(): Promise<void> {
+    await this.placeOrderButton.click();
 }
 }

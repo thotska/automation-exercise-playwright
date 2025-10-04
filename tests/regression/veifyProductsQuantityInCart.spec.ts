@@ -17,7 +17,7 @@ test.describe('Verify Products Quantity in Cart', async () => {
     })
 
     test('Verify Products Quantity in Cart', async ({ page }) => {
-        await page.goto(process.env.baseurl!)
+        await page.goto(process.env.baseURL!)
         await homePage.verifyHomePage()
         await homePage.verifyHomePage()
         await searchedProductsPage.clickOnViewProduct()
