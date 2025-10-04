@@ -20,7 +20,7 @@ test.describe('Add Recommended Item To Cart Test', async () => {
 // 5. Click on 'Add To Cart' on Recommended product
 // 6. Click on 'View Cart' button
 // 7. Verify that product is displayed in cart page
-        await page.goto(process.env.baseurl!)
+        await page.goto(process.env.baseURL!)
         await homePage.verifyRecommendedItemsVisible()
         await homePage.clickOnAddToCartOfRecommendedItems(0)
         await homePage.clickOnViewCartButton()

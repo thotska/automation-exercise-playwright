@@ -13,7 +13,7 @@ test.describe('Scroll Up Button Functionality Test', async () => {
 
     test('Scroll Up Button Functionality Test', async ({ page }) => {   
 
-        await page.goto(process.env.baseurl!)
+        await page.goto(process.env.baseURL!)
         await homePage.verifyHomePage()
         await homePage.scrollToBottom()
         await basePage.verifyFooterText()
