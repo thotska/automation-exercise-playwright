@@ -11,6 +11,10 @@ export class Homepage extends BasePage {
     private menJeansLink: Locator
     private brandTitle: Locator
     private brandLinksLocator: Locator
+    private recommendedItemsTitle: Locator
+    private recommendedItemsProducts: Locator
+    private viewCartButton: Locator
+
 
     constructor(page: Page) {
         super(page)
@@ -22,6 +26,9 @@ export class Homepage extends BasePage {
         this.menJeansLink = page.getByRole('link', { name: 'Jeans' })
         this.brandTitle = page.getByRole('heading', { name: 'Brands' })
         this.brandLinksLocator = page.locator('div[class="brands-name"] ul li')
+        this.recommendedItemsTitle = page.getByRole('heading', { name: 'recommended items' })
+        this.recommendedItemsProducts = page.locator('div[class="carousel-inner"] a[class="btn btn-default add-to-cart"]')
+        this.viewCartButton = page.getByRole('link', { name: 'View Cart' })
         
     }
     async verifyHomePage() {
@@ -51,5 +58,15 @@ export class Homepage extends BasePage {
     }
     async clickBrandName(brandName: string): Promise<void> {
         await this.brandLinksLocator.getByText(brandName).click()
-
-}}
+    }
+    async verifyRecommendedItemsVisible(): Promise<void> {
+        await expect(this.recommendedItemsTitle).toBeVisible()
+        await expect(this.recommendedItemsTitle).toHaveText('recommended items')
+    }
+    async clickOnAddToCartOfRecommendedItems(number: number): Promise<void> {
+        await this.recommendedItemsProducts.nth(number).click()
+    }
+    async clickOnViewCartButton(): Promise<void> {
+        await this.viewCartButton.click()
+    }
+}

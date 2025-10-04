@@ -4,6 +4,7 @@ import { BasePage } from '../../pages/basePage';
 import { SearchedProductsPage } from '../../pages/searchedProductsPage';  
 import { ContactUsPage } from '../../pages/contactUsPage';
 import { ProductsPage } from '../../pages/productsPage';
+import { faker } from '@faker-js/faker';
 
 test.describe('Submit message via Contact Us form ', async () => {
     let homePage: Homepage   
@@ -31,12 +32,23 @@ test.describe('Submit message via Contact Us form ', async () => {
     // 9. Click OK button
     // 10. Verify success message 'Success! Your details have been submitted successfully.' is visible
     // 11. Click 'Home' button and verify that landed to home page successfully
-        await page.goto('process.env.baseurl!')
+        
+        // Generate fake data for the form
+        const testName = faker.person.fullName()
+        const testEmail = faker.internet.email()
+        const testSubject = 'Test Subject'
+        const testMessage = 'This is a test message for contact us form validation.'
+        
+        await page.goto('/')
         await homePage.verifyHomePage()
         await basePage.clickOnNavigationLink("Contact us")
         await contactUsPage.verifyContactUsPage()
-        await contactUsPage.fillContactUsForm('Test User', process.env.testemail!, 'Test Subject', 'This is a test message.','C:\\Users\\thots\\Downloads\\download.jfif' )
+        
+        // Set up dialog handler before triggering the action that causes it
         await contactUsPage.clickONAlertOkButton()
+        
+        // Fill and submit the form
+        await contactUsPage.fillContactUsForm(testName, testEmail, testSubject, testMessage)
         await contactUsPage.verifyContactUsPageSuccessMessage()
     })
 })  
