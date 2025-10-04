@@ -16,7 +16,7 @@ export class SearchedProductsPage extends BasePage {
     this.continueShoppingButton = page.getByRole('button', { name: 'Continue Shopping' })
     this.allProductsVisibleLocator = page.locator('div[class="features_items"] div[class="single-products"]')
     this.viewProductLink = page.locator('.nav.nav-pills.nav-justified > li > a').first() 
-    this.addToCardButton = page.locator('div[class ="single-products"] a')
+    this.addToCardButton = page.locator('div[class="productinfo text-center"] a')
     this.productsInCart = page.locator('div[class="table-responsive cart_info"] tr')
     this.continueShoppingButton = page.getByRole('button', { name: 'Continue Shopping' })
     }
@@ -37,6 +37,12 @@ export class SearchedProductsPage extends BasePage {
         for (let i = 0; i < await this.addToCardButton.count(); i++){
             await this.addToCardButton.nth(i).click()
             await this.page.waitForTimeout(2000);
+            await this.continueShoppingButton.click()
+        }
+    }
+    async addTenToCart():Promise<void>{
+        for (let i = 0; i < 10; i++){
+            await this.addToCardButton.nth(i).click()
             await this.continueShoppingButton.click()
         }
     }
