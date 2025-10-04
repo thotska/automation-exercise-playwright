@@ -14,11 +14,14 @@ export class Homepage extends BasePage {
     private recommendedItemsTitle: Locator
     private recommendedItemsProducts: Locator
     private viewCartButton: Locator
+    private arrowToScrollUp: Locator
+    private subtitle: Locator
 
 
     constructor(page: Page) {
         super(page)
         this.mainTitle = page.locator('div[class="logo pull-left"] img')
+        this.subtitle = page.locator('div[class="item active"] div[class="col-sm-6"] h2')
         this.categoriesLocator = page.locator('div[id="accordian"]')
         this.womenCategoryLink = page.getByRole('link', { name: ' Women' })
         this.womenDressLink = page.getByRole('link', { name: 'Dress' })
@@ -29,6 +32,7 @@ export class Homepage extends BasePage {
         this.recommendedItemsTitle = page.getByRole('heading', { name: 'recommended items' })
         this.recommendedItemsProducts = page.locator('div[class="carousel-inner"] a[class="btn btn-default add-to-cart"]')
         this.viewCartButton = page.getByRole('link', { name: 'View Cart' })
+        this.arrowToScrollUp = page.getByRole('link', { name: '' })
         
     }
     async verifyHomePage() {
@@ -68,5 +72,12 @@ export class Homepage extends BasePage {
     }
     async clickOnViewCartButton(): Promise<void> {
         await this.viewCartButton.click()
+    }
+    async clickONArrowToScrollUp(): Promise<void> {
+        await this.arrowToScrollUp.click()
+    }
+    async verifySubtitle(): Promise<void> {
+        await expect(this.subtitle).toBeVisible()
+        await expect(this.subtitle).toHaveText('Full-Fledged practice website for Automation Engineers')
     }
 }
