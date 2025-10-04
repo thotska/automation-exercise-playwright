@@ -8,19 +8,22 @@ export class CartPage extends BasePage {
     
     constructor(page: Page) {
         super(page)
-        this.cartPageTitle = page.locator('class="breadcrumb"')
+        this.cartPageTitle = page.locator('ol[class="breadcrumb"]')
         this.closeSymbolLocator = page.locator('a[class="cart_quantity_delete"]')
         this.emptyCartMessage = page.locator('span[id="empty_cart"]')
     }
     async verifyCartPage(): Promise<void> {
-        await expect(this.cartPageTitle.innerText()).toBe('Shopping Cart') 
+        await expect(this.cartPageTitle).toBeVisible()
+        await expect(this.cartPageTitle).toContainText('Cart')
     }
     async removeAllProductsFromCart(): Promise<void> {
-        for (let i = 0; i < 10; i++){
-            await this.closeSymbolLocator.nth(0).click()
+        while (await this.closeSymbolLocator.count() > 0) {
+            await this.closeSymbolLocator.first().click({delay: 500});
+            
         }
 }
 async verifyNoProductsAreInCart(): Promise<void> {
-    await expect(this.emptyCartMessage.innerText()).toBe('Cart is empty!')
+    await expect(this.emptyCartMessage).toBeVisible()
+    await expect(this.emptyCartMessage).toContainText('Cart is empty!')
 }
 }
