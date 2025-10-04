@@ -17,7 +17,7 @@ test.describe('Scroll Up Button Functionality Test', async () => {
         await homePage.verifyHomePage()
         await homePage.scrollToBottom()
         await basePage.verifyFooterText()
-        await homePage.clickONArrowToScrollUp()
+        await homePage.scrollToTop()
         await homePage.verifySubtitle()
      
     })
