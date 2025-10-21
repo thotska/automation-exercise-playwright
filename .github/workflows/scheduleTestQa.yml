@@ -1,0 +1,140 @@
+name: Scheduled UI Tests - QA Environment
+
+on:
+  schedule:
+    # Runs every day at 6 AM and 6 PM UTC
+    - cron: '0 6,18 * * *'
+  workflow_dispatch: # Allows manual trigger
+    inputs:
+      test_suite:
+        description: 'Test suite to run'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - critical
+          - regression
+      browser:
+        description: 'Browser to test'
+        required: false
+        default: 'chromium'
+        type: choice
+        options:
+          - chromium
+          - firefox
+          - webkit
+
+env:
+  ENVIRONMENT: qa
+  BASE_URL: https://automationexercise.com
+
+jobs:
+  test:
+    name: Run Playwright Tests - QA
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium]
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'LTS'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: |
+          if [ "${{ github.event.inputs.browser }}" != "" ]; then
+            npx playwright install --with-deps ${{ github.event.inputs.browser }}
+          else
+            npx playwright install --with-deps ${{ matrix.browser }}
+          fi
+
+      - name: Run all tests
+        if: ${{ github.event.inputs.test_suite == 'all' || github.event.inputs.test_suite == '' }}
+        run: |
+          if [ "${{ github.event.inputs.browser }}" != "" ]; then
+            npx playwright test --project=${{ github.event.inputs.browser }}
+          else
+            npx playwright test --project=${{ matrix.browser }}
+          fi
+        env:
+          CI: true
+
+      - name: Run critical tests only
+        if: ${{ github.event.inputs.test_suite == 'critical' }}
+        run: |
+          if [ "${{ github.event.inputs.browser }}" != "" ]; then
+            npx playwright test tests/critical --project=${{ github.event.inputs.browser }}
+          else
+            npx playwright test tests/critical --project=${{ matrix.browser }}
+          fi
+        env:
+          CI: true
+
+      - name: Run regression tests only
+        if: ${{ github.event.inputs.test_suite == 'regression' }}
+        run: |
+          if [ "${{ github.event.inputs.browser }}" != "" ]; then
+            npx playwright test tests/regression --project=${{ github.event.inputs.browser }}
+          else
+            npx playwright test tests/regression --project=${{ matrix.browser }}
+          fi
+        env:
+          CI: true
+
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-qa-${{ matrix.browser }}-${{ github.run_number }}
+          path: playwright-report/
+          retention-days: 14
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-qa-${{ matrix.browser }}-${{ github.run_number }}
+          path: test-results/
+          retention-days: 14
+
+      - name: Upload Screenshots and Videos
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: failure-artifacts-qa-${{ matrix.browser }}-${{ github.run_number }}
+          path: |
+            test-results/**/*.png
+            test-results/**/*.webm
+          retention-days: 14
+
+  notify:
+    name: Notify Test Results
+    needs: test
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Send notification
+        run: |
+          echo "Tests completed with status: ${{ needs.test.result }}"
+          echo "Environment: QA"
+          echo "Run URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          
+      - name: Create test summary
+        run: |
+          echo "## QA Test Results Summary 🧪" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ${{ needs.test.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment:** QA" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
