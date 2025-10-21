@@ -79,5 +79,9 @@ export class Homepage extends BasePage {
     async verifySubtitle(): Promise<void> {
         await expect(this.subtitle).toBeVisible()
         await expect(this.subtitle).toHaveText('Full-Fledged practice website for Automation Engineers')
-    }
+ 
+   }
+   async scrollToTop(): Promise<void> {
+    await this.page.locator('div[class="item active"] div[class="col-sm-6"] h2').scrollIntoViewIfNeeded()
+   }
 }

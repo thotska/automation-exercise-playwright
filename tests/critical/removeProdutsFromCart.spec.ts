@@ -28,7 +28,7 @@ test.describe('Verify Products Quantity in Cart', async () => {
 // 6. Verify that cart page is displayed
 // 7. Click 'X' button corresponding to each product
 // 8. Verify that product is removed from the cart
-        await page.goto(process.env.baseurl!)
+        await page.goto(process.env.baseURL!)
         await homePage.verifyHomePage()
         await searchedProductsPage.addTenToCart()
         await basePage.clickOnNavigationLink("Cart")
