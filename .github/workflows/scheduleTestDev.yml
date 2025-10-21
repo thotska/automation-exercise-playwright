@@ -1,4 +1,4 @@
-name: QA Tests
+name: Dev Tests
 
 on:
   schedule:
@@ -33,12 +33,12 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-qa
+          name: test-results-dev
           path: test-results/
       
       - name: Upload HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-qa
+          name: playwright-report-dev
           path: playwright-report/
