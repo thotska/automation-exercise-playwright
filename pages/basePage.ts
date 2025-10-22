@@ -32,7 +32,9 @@ export class BasePage {
         await expect(this.successMessage).toHaveText('You have been successfully subscribed!')
     }
     async clickOnNavigationLink(linkText: string) {
-        await this.topNavigationBarLocators.getByText(linkText).click()
+        const link = this.topNavigationBarLocators.getByText(linkText, { exact: false })
+        await link.waitFor({ state: 'visible', timeout: 30000 })
+        await link.click()
     }
     async verifyLoginSuccessMessage(userName: string):Promise<void>{
         await expect(this.topNavigationBarLocators.getByText(`Logged in as ${userName}`)).toBeVisible()
