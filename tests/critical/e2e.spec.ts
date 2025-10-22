@@ -26,8 +26,12 @@ test.describe('End to end test cases', async () => {
         const fullName = `${firstName} ${lastName}`
         const email = faker.internet.email()
         const password = faker.internet.password()
+        const title = faker.helpers.arrayElement(['Mr.', 'Mrs.'])
+        const day = faker.number.int({ min: 1, max: 28 }).toString()
+        const month = faker.number.int({ min: 1, max: 12 }).toString()
+        const year = faker.number.int({ min: 1950, max: 2000 }).toString()
 
-        await signUpPage.fillAccountDetail(fullName, email, password, firstName, lastName)
+        await signUpPage.fillAccountDetail(title, password, day, month, year)
         await signUpPage.clickCreateAccountButton()
         
     })
