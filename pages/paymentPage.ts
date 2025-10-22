@@ -33,6 +33,7 @@ export class PaymentPage extends BasePage {
     }
     async verifyOrderPlacedSuccessMessage(): Promise<void> {
         await expect(this.orderPlacedSuccessMessage).toBeVisible()
-        await expect(this.orderPlacedSuccessMessage).toHaveText('Congratulations! Your order has been confirmed!')
+        await expect(this.orderPlacedSuccessMessage).toHaveText('Order Placed!')
+        
     }
 }
