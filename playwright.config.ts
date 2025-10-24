@@ -56,7 +56,7 @@ export default defineConfig({
         // },
 
         // {
-        //     name: 'webkit',
+        //     name: 'webkit',//safari
         //     use: { ...devices['Desktop Safari'] },
         // },
 
